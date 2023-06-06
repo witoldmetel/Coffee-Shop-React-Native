@@ -1,35 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
-import { Link, Stack } from "expo-router";
+import { Link } from "expo-router";
+
+import { useMenu } from "~/hooks/useMenu";
 
 const MenuScreen = () => {
-  const [dogs, setDogs] = useState([]);
+  const [menuItems, status, error] = useMenu();
 
-  useEffect(() => {
-    fetch("https://api.thedogapi.com/v1/breeds?limit=20")
-      .then((response) => response.json())
-      .then((json) => {
-        setDogs(json);
-      })
-      .catch((error) => console.error(error));
-  }, []);
+  if (status === "loading") return <Text>Loading...</Text>;
+  if (status === "error")
+    return (
+      <Text>
+        {typeof error === "object"
+          ? JSON.stringify(error)
+          : "Cannot fetch data from the server"}
+      </Text>
+    );
 
-  const renderItem = ({ item }: { item: any }) => (
-    <Link href={`/dogs/${item.id}`} asChild>
-      <Pressable style={styles.itemContainer}>
-        <View style={styles.textContainer}>
-          <Text style={styles.nameText}>{item.name}</Text>
-        </View>
-      </Pressable>
-    </Link>
-  );
+  const getImage = (url: string) =>
+    `https://firtman.github.io/coffeemasters/api/images/${url}`;
+
+  const renderItem = ({ item }: { item: any }) => {
+    console.log("file: menu.tsx:16 ~ MenuScreen ~ item:", item);
+    return (
+      <Link href={`/product/${item.id}`} asChild>
+        <Pressable style={styles.itemContainer}>
+          <View style={styles.textContainer}>
+            <Text style={styles.nameText}>{item.name}</Text>
+          </View>
+        </Pressable>
+      </Link>
+    );
+  };
 
   return (
     <View>
-      <Stack.Screen options={{ title: "Dogs" }} />
       <FlatList
-        data={dogs}
-        keyExtractor={({ id }) => id}
+        data={menuItems}
+        keyExtractor={({ name }) => name}
         renderItem={renderItem}
       />
     </View>
