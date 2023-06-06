@@ -1,12 +1,21 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { ScrollView } from "react-native";
 
-const offers = () => {
+import { OfferWrapper } from "~/components";
+
+const OffersScreen = () => {
   return (
-    <View>
-      <Text>offers</Text>
-    </View>
+    <ScrollView style={{ flex: 1 }}>
+      <OfferWrapper
+        title="Early Coffee"
+        description="10% off. Offer valid from 6am to 9am."
+      />
+      <OfferWrapper
+        title="Welcome Gift"
+        description="25% off on your first order"
+      />
+    </ScrollView>
   );
 };
 
-export default offers;
+export default OffersScreen;
