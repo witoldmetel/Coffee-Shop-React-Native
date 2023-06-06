@@ -15,14 +15,22 @@ const RootLayout = () => {
           The Stack component displays the current page.
           It also allows you to configure your screens 
         */}
+        <StatusBar />
         <Stack
           screenOptions={{
             headerStyle: {
-              backgroundColor: "#f472b6",
+              backgroundColor: "#F2F2F7",
             },
           }}
-        />
-        <StatusBar />
+        >
+          <Stack.Screen
+            name="(tabs)"
+            options={{
+              // Hide the header for all other routes.
+              headerShown: false,
+            }}
+          />
+        </Stack>
       </SafeAreaProvider>
     </TRPCProvider>
   );
