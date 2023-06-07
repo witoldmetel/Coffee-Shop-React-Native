@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { type ProductType } from "../../../../packages/types";
+import { type MenuItemType } from "../../../types";
 
 function getMenu() {
   return fetch("https://firtman.github.io/coffeemasters/api/menu.json").then(
@@ -9,7 +9,7 @@ function getMenu() {
 }
 
 export const useMenu = (): [
-  ProductType[] | undefined,
+  MenuItemType[] | undefined,
   "error" | "success" | "loading",
   unknown,
 ] => {
@@ -17,7 +17,7 @@ export const useMenu = (): [
     data: menuItems,
     status,
     error,
-  } = useQuery<ProductType[]>({
+  } = useQuery<MenuItemType[]>({
     queryKey: ["menu"],
     queryFn: getMenu,
   });

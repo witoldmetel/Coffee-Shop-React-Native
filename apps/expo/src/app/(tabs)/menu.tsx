@@ -1,7 +1,9 @@
 import React from "react";
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
-import { Link } from "expo-router";
+import { StyleSheet, Text, View } from "react-native";
+import { Image } from "expo-image";
+import { FlashList } from "@shopify/flash-list";
 
+import { ProductWrapper } from "~/components";
 import { useMenu } from "~/hooks/useMenu";
 
 const MenuScreen = () => {
@@ -17,28 +19,25 @@ const MenuScreen = () => {
       </Text>
     );
 
-  const getImage = (url: string) =>
-    `https://firtman.github.io/coffeemasters/api/images/${url}`;
-
-  const renderItem = ({ item }: { item: any }) => {
-    console.log("file: menu.tsx:16 ~ MenuScreen ~ item:", item);
-    return (
-      <Link href={`/product/${item.id}`} asChild>
-        <Pressable style={styles.itemContainer}>
-          <View style={styles.textContainer}>
-            <Text style={styles.nameText}>{item.name}</Text>
-          </View>
-        </Pressable>
-      </Link>
-    );
-  };
-
   return (
-    <View>
-      <FlatList
+    <View style={styles.container}>
+      <FlashList
         data={menuItems}
         keyExtractor={({ name }) => name}
-        renderItem={renderItem}
+        renderItem={({ item }) => <ProductWrapper item={item} />}
+        estimatedItemSize={180}
+        ListHeaderComponent={() => (
+          <View style={styles.header}>
+            <Image
+              style={styles.image}
+              source={require("../../../assets/Logo/logo.png")}
+              contentFit="contain"
+              transition={1000}
+              alt="coffee-shop-logo"
+            />
+          </View>
+        )}
+        ListFooterComponent={() => <View style={styles.footer} />}
       />
     </View>
   );
@@ -47,19 +46,29 @@ const MenuScreen = () => {
 export default MenuScreen;
 
 const styles = StyleSheet.create({
-  itemContainer: {
+  container: {
     flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
+    marginHorizontal: 8,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+  },
+  header: {
+    height: 50,
+    backgroundColor: "#43281C",
     padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    justifyContent: "flex-start",
   },
-  textContainer: {
-    marginLeft: 16,
+  image: {
+    flex: 1,
+    width: "100%",
   },
-  nameText: {
-    fontSize: 16,
-    fontWeight: "bold",
+  footer: {
+    backgroundColor: "#fff",
+    marginBottom: 16,
+    padding: 16,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
   },
 });
