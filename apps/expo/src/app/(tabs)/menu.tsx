@@ -7,7 +7,7 @@ import { CategoryWrapper } from "~/components";
 import { useMenu } from "~/hooks/useMenu";
 
 const MenuScreen = () => {
-  const [menuItems, status, error] = useMenu();
+  const { menuItems, status, error } = useMenu();
 
   if (status === "loading") return <Text>Loading...</Text>;
   if (status === "error")

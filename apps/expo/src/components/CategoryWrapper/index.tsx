@@ -1,30 +1,25 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 
 import { type MenuItemType, type ProductType } from "../../../../types";
+import ProductImage from "../ProductImage";
 
 type CategoryWrapperProps = {
   item: MenuItemType;
 };
 
 const CategoryWrapper = ({ item }: CategoryWrapperProps) => {
-  const getImage = (url: string) =>
-    `https://firtman.github.io/coffeemasters/api/images/${url}`;
-
   const productItem = (product: ProductType) => {
     return (
-      <View style={styles.productContainer}>
+      <View key={product.id} style={styles.productContainer}>
         <Link key={product.id} href={`/product/${product.id}`} asChild>
           <Pressable style={styles.itemContent}>
-            <Image
-              style={styles.image}
-              source={getImage(product.image)}
-              contentFit="cover"
-              transition={1000}
-              alt={`${product.name}-image`}
+            <ProductImage
+              name={product.name}
+              url={product.image}
+              className="w-full flex-1 rounded-t-lg"
             />
             <View style={styles.infoSection}>
               <View>
@@ -68,19 +63,12 @@ const styles = StyleSheet.create({
   productContainer: {
     margin: 16,
     backgroundColor: "#ede0d4",
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
+    borderRadius: 8,
   },
   itemContent: {
     flex: 1,
     height: 200,
     alignItems: "center",
-  },
-  image: {
-    flex: 1,
-    width: "100%",
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
   },
   infoSection: {
     paddingVertical: 8,

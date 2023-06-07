@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import { type MenuItemType } from "../../../types";
+import { type MenuItemType, type ProductType } from "../../../types";
 
 function getMenu() {
   return fetch("https://firtman.github.io/coffeemasters/api/menu.json").then(
@@ -8,11 +9,14 @@ function getMenu() {
   );
 }
 
-export const useMenu = (): [
-  MenuItemType[] | undefined,
-  "error" | "success" | "loading",
-  unknown,
-] => {
+export const useMenu = (
+  productId?: number,
+): {
+  menuItems: MenuItemType[] | undefined;
+  status: "error" | "success" | "loading";
+  error: unknown;
+  productDetails: ProductType | null;
+} => {
   const {
     data: menuItems,
     status,
@@ -22,5 +26,29 @@ export const useMenu = (): [
     queryFn: getMenu,
   });
 
-  return [menuItems, status, error];
+  const [productDetails, setProductDetails] = useState<ProductType | null>(
+    null,
+  );
+
+  function getProductById(productId: number) {
+    if (menuItems) {
+      for (const category of menuItems) {
+        for (const product of category.products) {
+          if (product.id === productId) {
+            setProductDetails(product);
+          }
+        }
+      }
+    } else {
+      setProductDetails(null); // Return null if product is not found
+    }
+  }
+
+  useEffect(() => {
+    if (productId) {
+      getProductById(productId);
+    }
+  }, [productId]);
+
+  return { menuItems, status, error, productDetails };
 };

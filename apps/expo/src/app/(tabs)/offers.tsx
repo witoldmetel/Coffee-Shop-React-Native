@@ -5,7 +5,7 @@ import { OfferWrapper } from "~/components";
 
 const OffersScreen = () => {
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView className="flex-1">
       <OfferWrapper
         title="Early Coffee"
         description="10% off. Offer valid from 6am to 9am."
