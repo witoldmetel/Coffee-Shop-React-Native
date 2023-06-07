@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Pressable, SafeAreaView, Text, View } from "react-native";
 import { SplashScreen, Stack, useRouter, useSearchParams } from "expo-router";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
@@ -8,10 +9,23 @@ import { useMenu } from "~/hooks/useMenu";
 const Product: React.FC = () => {
   const router = useRouter();
   const { id } = useSearchParams();
+  const [count, setCount] = useState(0);
+
   if (!id || typeof id !== "string") throw new Error("unreachable");
+
   const { productDetails } = useMenu(Number(id));
 
   if (!productDetails) return <SplashScreen />;
+
+  const increase = () => {
+    setCount((count) => count + 1);
+  };
+
+  const decrease = () => {
+    if (count > 0) {
+      setCount((count) => count - 1);
+    }
+  };
 
   return (
     <SafeAreaView className=" flex-1 bg-[#F2F2F7]">
@@ -42,7 +56,7 @@ const Product: React.FC = () => {
           url={productDetails.image}
           contentFit="contain"
           contentPosition="top"
-          style={{ width: "100%", aspectRatio: 1 }}
+          style={{ width: "100%", height: 180 }}
         />
         <Text className="py-2 text-3xl">{productDetails.name}</Text>
         <Text className="text-1xl py-2 text-center">
@@ -52,8 +66,25 @@ const Product: React.FC = () => {
           <Text className="text-1xl py-2">{`$ ${productDetails.price.toFixed(
             2,
           )} ea`}</Text>
-          <Text className="text-1xl py-2">{productDetails.name}</Text>
+          <View className="my-8 flex-row rounded-lg bg-[#f2f2f7]">
+            <Pressable className="p-2" onPress={decrease}>
+              <AntDesign name="minus" size={24} color="black" />
+            </Pressable>
+            <View className="my-2 h-auto w-px bg-[#929299]" />
+            <Pressable className="p-2" onPress={increase}>
+              <AntDesign name="plus" size={24} color="black" />
+            </Pressable>
+          </View>
         </View>
+        <Text className="py-2 text-center text-2xl font-bold">
+          Subtotal ${(count * productDetails.price).toFixed(2)}
+        </Text>
+        <Pressable
+          className="rounded-2xl bg-[#ebd7b3] p-4"
+          onPress={() => console.log("add")}
+        >
+          <Text className="text-1xl text-center">Add {count} to cart</Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );
