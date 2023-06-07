@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Image } from "expo-image";
 import { FlashList } from "@shopify/flash-list";
 
-import { ProductWrapper } from "~/components";
+import { CategoryWrapper } from "~/components";
 import { useMenu } from "~/hooks/useMenu";
 
 const MenuScreen = () => {
@@ -24,8 +24,8 @@ const MenuScreen = () => {
       <FlashList
         data={menuItems}
         keyExtractor={({ name }) => name}
-        renderItem={({ item }) => <ProductWrapper item={item} />}
-        estimatedItemSize={180}
+        renderItem={({ item }) => <CategoryWrapper item={item} />}
+        estimatedItemSize={260}
         ListHeaderComponent={() => (
           <View style={styles.header}>
             <Image
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   footer: {
     backgroundColor: "#fff",
     marginBottom: 16,
-    padding: 16,
+    padding: 4,
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
   },

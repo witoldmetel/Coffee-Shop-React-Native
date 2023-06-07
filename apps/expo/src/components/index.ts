@@ -1,2 +1,2 @@
 export { default as OfferWrapper } from "./OfferWrapper";
-export { default as ProductWrapper } from "./ProductWrapper";
+export { default as CategoryWrapper } from "./CategoryWrapper";
