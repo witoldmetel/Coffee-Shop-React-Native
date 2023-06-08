@@ -51,8 +51,26 @@ export const CartManagerProvider = ({ children }: CartManagerProviderProps) => {
     });
   }
 
+  function removeFromCart(productId: number) {
+    setOrders((prev) => prev.filter((order) => order.productId !== productId));
+  }
+
+  function clearCart() {
+    setOrders([]);
+  }
+
+  function getTotalPrice(): string {
+    return orders
+      .reduce((prev, curr) => {
+        return prev + curr.totalPrice;
+      }, 0)
+      .toFixed(2);
+  }
+
   return (
-    <CartManagerContext.Provider value={{ orders, addToCart }}>
+    <CartManagerContext.Provider
+      value={{ orders, addToCart, removeFromCart, clearCart, getTotalPrice }}
+    >
       {children}
     </CartManagerContext.Provider>
   );

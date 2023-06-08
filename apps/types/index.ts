@@ -20,10 +20,14 @@ export type OrderType = {
 
 export type CartManagerContextType = {
   orders: OrderType[];
+
   addToCart: (
     productId: number,
     productName: string,
     quantity: number,
     totalPrice: number,
   ) => void;
+  removeFromCart: (productId: number) => void;
+  clearCart: () => void;
+  getTotalPrice: () => string;
 };
