@@ -14,7 +14,7 @@ const CategoryWrapper = ({ item }: CategoryWrapperProps) => {
   const productItem = (product: ProductType) => {
     return (
       <View key={product.id} style={styles.productContainer}>
-        <Link key={product.id} href={`/product/${product.id}`} asChild>
+        <Link key={product.id} href={`/menu/product/${product.id}`} asChild>
           <Pressable style={styles.itemContent}>
             <ProductImage
               name={product.name}

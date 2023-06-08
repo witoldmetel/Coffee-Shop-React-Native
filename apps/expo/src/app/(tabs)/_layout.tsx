@@ -14,8 +14,8 @@ const TabsNavigation = () => {
       <Tabs.Screen
         name="menu"
         options={{
+          headerShown: false,
           title: "Menu",
-          headerTitle: "Products",
           tabBarActiveTintColor: ACTIVE_COLOR,
           tabBarInactiveTintColor: INACTIVE_COLOR,
           tabBarIcon: ({ focused }) => (

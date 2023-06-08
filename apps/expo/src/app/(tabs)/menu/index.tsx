@@ -1,6 +1,7 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { Image } from "expo-image";
+import { Stack } from "expo-router";
 import { FlashList } from "@shopify/flash-list";
 
 import { CategoryWrapper } from "~/components";
@@ -20,26 +21,29 @@ const MenuScreen = () => {
     );
 
   return (
-    <View style={styles.container}>
-      <FlashList
-        data={menuItems}
-        keyExtractor={({ name }) => name}
-        renderItem={({ item }) => <CategoryWrapper item={item} />}
-        estimatedItemSize={260}
-        ListHeaderComponent={() => (
-          <View style={styles.header}>
-            <Image
-              style={styles.image}
-              source={require("../../../assets/Logo/logo.png")}
-              contentFit="contain"
-              transition={1000}
-              alt="coffee-shop-logo"
-            />
-          </View>
-        )}
-        ListFooterComponent={() => <View style={styles.footer} />}
-      />
-    </View>
+    <SafeAreaView className=" flex-1 bg-[#F2F2F7]">
+      <Stack.Screen options={{ headerTitle: "Products" }} />
+      <View style={styles.container}>
+        <FlashList
+          data={menuItems}
+          keyExtractor={({ name }) => name}
+          renderItem={({ item }) => <CategoryWrapper item={item} />}
+          estimatedItemSize={260}
+          ListHeaderComponent={() => (
+            <View style={styles.header}>
+              <Image
+                style={styles.image}
+                source={require("../../../../assets/Logo/logo.png")}
+                contentFit="contain"
+                transition={1000}
+                alt="coffee-shop-logo"
+              />
+            </View>
+          )}
+          ListFooterComponent={() => <View style={styles.footer} />}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 
