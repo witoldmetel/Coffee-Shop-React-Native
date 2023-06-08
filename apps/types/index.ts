@@ -30,4 +30,5 @@ export type CartManagerContextType = {
   removeFromCart: (productId: number) => void;
   clearCart: () => void;
   getTotalPrice: () => string;
+  getTotalQuantity: () => number;
 };

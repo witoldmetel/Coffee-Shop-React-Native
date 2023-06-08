@@ -4,7 +4,7 @@ import { EvilIcons } from "@expo/vector-icons";
 
 import { useCartManager } from "~/hooks/useCartManager";
 
-const OrderScreens = () => {
+const OrderScreen = () => {
   const { orders, getTotalPrice, removeFromCart } = useCartManager();
   const [userName, setUserName] = useState("");
   const [phone, setPhone] = useState("");
@@ -24,11 +24,8 @@ const OrderScreens = () => {
       <Text className="my-4 ml-4 font-semibold text-gray-400">ITEMS</Text>
       <View className="rounded-lg bg-[#ede0d4] p-4">
         {orders.map((item, index) => (
-          <>
-            <View
-              key={item.productId}
-              className="flex-row items-center justify-between bg-[#ede0d4] py-4"
-            >
+          <View key={item.productId}>
+            <View className="flex-row items-center justify-between bg-[#ede0d4] py-4">
               <Text className="font-semibold">{`${item.quantity}x ${item.productName}`}</Text>
               <View className="flex-row items-center">
                 <Text className="mr-2">$ {item.totalPrice.toFixed(2)}</Text>
@@ -40,7 +37,7 @@ const OrderScreens = () => {
             {index !== orders.length - 1 && (
               <View className="my-2 h-px w-full bg-[#929299]" />
             )}
-          </>
+          </View>
         ))}
       </View>
       <Text className="my-4 ml-4 font-semibold text-gray-400">
@@ -76,4 +73,4 @@ const OrderScreens = () => {
   );
 };
 
-export default OrderScreens;
+export default OrderScreen;

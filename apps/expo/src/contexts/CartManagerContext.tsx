@@ -59,6 +59,12 @@ export const CartManagerProvider = ({ children }: CartManagerProviderProps) => {
     setOrders([]);
   }
 
+  function getTotalQuantity(): number {
+    return orders.reduce((prev, curr) => {
+      return prev + curr.quantity;
+    }, 0);
+  }
+
   function getTotalPrice(): string {
     return orders
       .reduce((prev, curr) => {
@@ -69,7 +75,14 @@ export const CartManagerProvider = ({ children }: CartManagerProviderProps) => {
 
   return (
     <CartManagerContext.Provider
-      value={{ orders, addToCart, removeFromCart, clearCart, getTotalPrice }}
+      value={{
+        orders,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        getTotalPrice,
+        getTotalQuantity,
+      }}
     >
       {children}
     </CartManagerContext.Provider>
