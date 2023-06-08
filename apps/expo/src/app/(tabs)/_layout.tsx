@@ -16,6 +16,7 @@ const TabsNavigation = () => {
         options={{
           headerShown: false,
           title: "Menu",
+          href: "/menu",
           tabBarActiveTintColor: ACTIVE_COLOR,
           tabBarInactiveTintColor: INACTIVE_COLOR,
           tabBarIcon: ({ focused }) => (
@@ -31,6 +32,7 @@ const TabsNavigation = () => {
         name="offers"
         options={{
           title: "Offers",
+          href: "/offers",
           tabBarActiveTintColor: ACTIVE_COLOR,
           tabBarInactiveTintColor: INACTIVE_COLOR,
           tabBarIcon: ({ focused }) => (
@@ -46,6 +48,7 @@ const TabsNavigation = () => {
         name="order"
         options={{
           title: "My Order",
+          href: "/order",
           headerTitle: "Your Order",
           tabBarActiveTintColor: ACTIVE_COLOR,
           tabBarInactiveTintColor: INACTIVE_COLOR,

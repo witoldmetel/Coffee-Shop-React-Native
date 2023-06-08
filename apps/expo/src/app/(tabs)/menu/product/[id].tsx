@@ -4,14 +4,14 @@ import { SplashScreen, Stack, useRouter, useSearchParams } from "expo-router";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 
 import { ProductImage } from "~/components";
+import { useCartManager } from "~/hooks/useCartManager";
 import { useMenu } from "~/hooks/useMenu";
 
 const Product: React.FC = () => {
   const router = useRouter();
   const { id } = useSearchParams();
   const [count, setCount] = useState(0);
-
-  if (!id || typeof id !== "string") throw new Error("unreachable");
+  const { addToCart } = useCartManager();
 
   const { productDetails } = useMenu(Number(id));
 
@@ -26,6 +26,8 @@ const Product: React.FC = () => {
       setCount((count) => count - 1);
     }
   };
+
+  const getTotalPrice = (price: number): number => count * price;
 
   return (
     <SafeAreaView className=" flex-1 bg-[#F2F2F7]">
@@ -77,11 +79,19 @@ const Product: React.FC = () => {
           </View>
         </View>
         <Text className="py-2 text-center text-2xl font-bold">
-          Subtotal ${(count * productDetails.price).toFixed(2)}
+          Subtotal ${getTotalPrice(productDetails.price).toFixed(2)}
         </Text>
         <Pressable
-          className="rounded-2xl bg-[#ebd7b3] p-4"
-          onPress={() => console.log("add")}
+          className="my-8 w-full rounded-3xl bg-[#ebd7b3] p-4"
+          disabled={count === 0}
+          onPress={() =>
+            addToCart(
+              productDetails.id,
+              productDetails.name,
+              count,
+              getTotalPrice(productDetails.price),
+            )
+          }
         >
           <Text className="text-1xl text-center">Add {count} to cart</Text>
         </Pressable>
