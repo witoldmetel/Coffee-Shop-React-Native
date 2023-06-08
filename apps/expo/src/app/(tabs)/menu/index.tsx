@@ -21,6 +21,21 @@ const MenuScreen = () => {
       </Text>
     );
 
+  // @todo: Problem with re-rendering when type sth in search bar
+  const ListHeader = () => {
+    return (
+      <View style={styles.header}>
+        <Image
+          className="w-full flex-1"
+          source={require("../../../../assets/Logo/logo.png")}
+          contentFit="contain"
+          transition={1000}
+          alt="coffee-shop-logo"
+        />
+      </View>
+    );
+  };
+
   return (
     <SafeAreaView className=" flex-1 bg-[#F2F2F7]">
       <Stack.Screen options={{ headerTitle: "Products" }} />
@@ -28,7 +43,7 @@ const MenuScreen = () => {
         <TextInput
           clearButtonMode="always"
           editable
-          onChangeText={(searchQuery) => setSearchQuery(searchQuery)}
+          onChangeText={setSearchQuery}
           value={searchQuery}
           placeholder="Search"
           className="my-4 rounded-lg bg-[#E3E3E9] p-2"
@@ -38,18 +53,15 @@ const MenuScreen = () => {
           keyExtractor={({ name }) => name}
           renderItem={({ item }) => <CategoryWrapper item={item} />}
           estimatedItemSize={260}
-          ListHeaderComponent={() => (
-            <View style={styles.header}>
-              <Image
-                style={styles.image}
-                source={require("../../../../assets/Logo/logo.png")}
-                contentFit="contain"
-                transition={1000}
-                alt="coffee-shop-logo"
-              />
+          ListHeaderComponent={<ListHeader />}
+          ListFooterComponent={<View style={styles.footer} />}
+          ListEmptyComponent={
+            <View style={styles.categoryContainer}>
+              <Text style={styles.category}>
+                We don&apos;t have such thing in our store
+              </Text>
             </View>
-          )}
-          ListFooterComponent={() => <View style={styles.footer} />}
+          }
         />
       </View>
     </SafeAreaView>
@@ -73,15 +85,20 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 8,
     justifyContent: "flex-start",
   },
-  image: {
-    flex: 1,
-    width: "100%",
-  },
   footer: {
     backgroundColor: "#fff",
     marginBottom: 16,
     padding: 4,
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
+  },
+  categoryContainer: {
+    padding: 24,
+    backgroundColor: "#fff",
+  },
+  category: {
+    fontWeight: "bold",
+    fontSize: 16,
+    color: "#410413",
   },
 });

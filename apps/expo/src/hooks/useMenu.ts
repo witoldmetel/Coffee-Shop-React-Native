@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { type MenuItemType, type ProductType } from "../../../types";
@@ -30,14 +30,20 @@ export const useMenu = ({
     queryFn: getMenu,
   });
 
-  const filteredMenuItems = searchQuery
-    ? menuItems?.map((category) => ({
-        ...category,
-        products: category.products.filter((product) =>
-          product.name.toLowerCase().includes(searchQuery.toLowerCase()),
-        ),
-      }))
-    : menuItems;
+  const filteredMenuItems = useMemo(() => {
+    if (searchQuery) {
+      return menuItems
+        ?.map((category) => ({
+          ...category,
+          products: category.products.filter((product) =>
+            product.name.toLowerCase().includes(searchQuery.toLowerCase()),
+          ),
+        }))
+        .filter((category) => category.products.length > 0);
+    } else {
+      return menuItems;
+    }
+  }, [searchQuery, menuItems]);
 
   const [productDetails, setProductDetails] = useState<ProductType | null>(
     null,

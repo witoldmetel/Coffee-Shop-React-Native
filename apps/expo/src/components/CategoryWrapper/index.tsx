@@ -36,11 +36,9 @@ const CategoryWrapper = ({ item }: CategoryWrapperProps) => {
 
   return (
     <View style={styles.container}>
-      {item.products.length > 0 && (
-        <View style={styles.categoryContainer}>
-          <Text style={styles.category}>{item.name}</Text>
-        </View>
-      )}
+      <View style={styles.categoryContainer}>
+        <Text style={styles.category}>{item.name}</Text>
+      </View>
       {item.products.map((product) => productItem(product))}
     </View>
   );
