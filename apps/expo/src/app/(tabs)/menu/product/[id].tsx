@@ -13,7 +13,7 @@ const Product: React.FC = () => {
   const [count, setCount] = useState(0);
   const { addToCart } = useCartManager();
 
-  const { productDetails } = useMenu(Number(id));
+  const { productDetails } = useMenu({ productId: Number(id) });
 
   if (!productDetails) return <SplashScreen />;
 

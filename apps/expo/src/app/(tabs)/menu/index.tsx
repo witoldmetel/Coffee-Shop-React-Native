@@ -1,5 +1,5 @@
-import React from "react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
 import { Image } from "expo-image";
 import { Stack } from "expo-router";
 import { FlashList } from "@shopify/flash-list";
@@ -8,7 +8,8 @@ import { CategoryWrapper } from "~/components";
 import { useMenu } from "~/hooks/useMenu";
 
 const MenuScreen = () => {
-  const { menuItems, status, error } = useMenu();
+  const [searchQuery, setSearchQuery] = useState("");
+  const { menuItems, status, error } = useMenu({ searchQuery });
 
   if (status === "loading") return <Text>Loading...</Text>;
   if (status === "error")
@@ -24,6 +25,14 @@ const MenuScreen = () => {
     <SafeAreaView className=" flex-1 bg-[#F2F2F7]">
       <Stack.Screen options={{ headerTitle: "Products" }} />
       <View style={styles.container}>
+        <TextInput
+          clearButtonMode="always"
+          editable
+          onChangeText={(searchQuery) => setSearchQuery(searchQuery)}
+          value={searchQuery}
+          placeholder="Search"
+          className="my-4 rounded-lg bg-[#E3E3E9] p-2"
+        />
         <FlashList
           data={menuItems}
           keyExtractor={({ name }) => name}

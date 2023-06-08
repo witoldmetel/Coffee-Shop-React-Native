@@ -9,9 +9,13 @@ function getMenu() {
   );
 }
 
-export const useMenu = (
-  productId?: number,
-): {
+export const useMenu = ({
+  productId,
+  searchQuery,
+}: {
+  productId?: number;
+  searchQuery?: string;
+}): {
   menuItems: MenuItemType[] | undefined;
   status: "error" | "success" | "loading";
   error: unknown;
@@ -25,6 +29,15 @@ export const useMenu = (
     queryKey: ["menu"],
     queryFn: getMenu,
   });
+
+  const filteredMenuItems = searchQuery
+    ? menuItems?.map((category) => ({
+        ...category,
+        products: category.products.filter((product) =>
+          product.name.toLowerCase().includes(searchQuery.toLowerCase()),
+        ),
+      }))
+    : menuItems;
 
   const [productDetails, setProductDetails] = useState<ProductType | null>(
     null,
@@ -50,5 +63,5 @@ export const useMenu = (
     }
   }, [productId]);
 
-  return { menuItems, status, error, productDetails };
+  return { menuItems: filteredMenuItems, status, error, productDetails };
 };
