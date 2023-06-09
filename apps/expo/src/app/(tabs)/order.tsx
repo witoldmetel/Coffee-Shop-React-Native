@@ -43,6 +43,7 @@ const OrderScreen = () => {
       <Text className="my-4 ml-4 font-semibold text-gray-400">
         YOUR DETAILS
       </Text>
+      {/* @todo: Add missing validation */}
       <View className="rounded-lg bg-[#ede0d4] px-4">
         <TextInput
           editable
