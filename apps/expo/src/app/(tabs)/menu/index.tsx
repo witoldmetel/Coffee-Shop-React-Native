@@ -1,17 +1,27 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
-import { Image } from "expo-image";
+import {
+  ActivityIndicator,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { Stack } from "expo-router";
 import { FlashList } from "@shopify/flash-list";
 
-import { CategoryWrapper } from "~/components";
+import { CategoryWrapper, MenuListHeader } from "~/components";
 import { useMenu } from "~/hooks/useMenu";
 
 const MenuScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const { menuItems, status, error } = useMenu({ searchQuery });
 
-  if (status === "loading") return <Text>Loading...</Text>;
+  if (status === "loading")
+    return (
+      <ActivityIndicator className="flex-1" size="large" color="#410413" />
+    );
+
   if (status === "error")
     return (
       <Text>
@@ -20,21 +30,6 @@ const MenuScreen = () => {
           : "Cannot fetch data from the server"}
       </Text>
     );
-
-  // @todo: Problem with re-rendering when type sth in search bar
-  const ListHeader = () => {
-    return (
-      <View style={styles.header}>
-        <Image
-          className="w-full flex-1"
-          source={require("../../../../assets/Logo/logo.png")}
-          contentFit="contain"
-          transition={1000}
-          alt="coffee-shop-logo"
-        />
-      </View>
-    );
-  };
 
   return (
     <SafeAreaView className=" flex-1 bg-[#F2F2F7]">
@@ -53,7 +48,7 @@ const MenuScreen = () => {
           keyExtractor={({ name }) => name}
           renderItem={({ item }) => <CategoryWrapper item={item} />}
           estimatedItemSize={260}
-          ListHeaderComponent={<ListHeader />}
+          ListHeaderComponent={<MenuListHeader />}
           ListFooterComponent={<View style={styles.footer} />}
           ListEmptyComponent={
             <View style={styles.categoryContainer}>
@@ -76,14 +71,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     paddingHorizontal: 16,
     borderRadius: 8,
-  },
-  header: {
-    height: 50,
-    backgroundColor: "#43281C",
-    padding: 16,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
-    justifyContent: "flex-start",
   },
   footer: {
     backgroundColor: "#fff",
