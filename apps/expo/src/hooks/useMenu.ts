@@ -72,21 +72,13 @@ export const useMenu = ({
   }, [productId]);
 
   function isProductLiked(productId: number): boolean {
-    if (menuItems) {
-      for (const category of menuItems) {
-        for (const product of category.products) {
-          if (product.id === productId) {
-            const { data } = api.like.findLike.useQuery({ id: productId });
+    const { data } = api.like.findLike.useQuery({ id: productId });
 
-            if (data) {
-              return data.liked;
-            }
-          }
-        }
-      }
+    if (data) {
+      return data.liked;
+    } else {
+      return false;
     }
-
-    return false;
   }
 
   return {
