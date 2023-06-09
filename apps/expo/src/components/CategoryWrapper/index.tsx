@@ -1,10 +1,7 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Link } from "expo-router";
-import { AntDesign } from "@expo/vector-icons";
 
-import { api } from "~/utils/api";
-import { useMenu } from "~/hooks/useMenu";
 import { type MenuItemType, type ProductType } from "../../../../types";
 import ProductImage from "../ProductImage";
 
@@ -13,17 +10,7 @@ type CategoryWrapperProps = {
 };
 
 const CategoryWrapper = ({ item }: CategoryWrapperProps) => {
-  const { isProductLiked } = useMenu({});
-  const { like } = api.useContext();
-  const { mutate } = api.like.toggleLike.useMutation({
-    onSuccess: async () => {
-      await like.findLike.invalidate();
-    },
-  });
-
   const productItem = (product: ProductType) => {
-    const isLiked = isProductLiked(product.id);
-
     return (
       <View key={product.id} style={styles.productContainer}>
         <Link key={product.id} href={`/menu/product/${product.id}`} asChild>
@@ -38,13 +25,6 @@ const CategoryWrapper = ({ item }: CategoryWrapperProps) => {
                 <Text style={styles.productName}>{product.name}</Text>
                 <Text>{`$ ${product.price.toFixed(2)}`}</Text>
               </View>
-              <Pressable onPress={() => mutate({ id: product.id })}>
-                <AntDesign
-                  name={isLiked ? "heart" : "hearto"}
-                  size={24}
-                  color="#7F4F24"
-                />
-              </Pressable>
             </View>
           </Pressable>
         </Link>

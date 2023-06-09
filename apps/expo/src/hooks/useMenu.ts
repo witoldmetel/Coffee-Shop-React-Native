@@ -21,7 +21,7 @@ export const useMenu = ({
   status: "error" | "success" | "loading";
   error: unknown;
   productDetails: ProductType | null;
-  isProductLiked: (productId: number) => boolean;
+  isProductLiked: () => boolean;
 } => {
   const {
     data: menuItems,
@@ -71,7 +71,7 @@ export const useMenu = ({
     }
   }, [productId]);
 
-  function isProductLiked(productId: number): boolean {
+  function isProductLiked(): boolean {
     const { data } = api.like.findLike.useQuery({ id: productId });
 
     if (data) {

@@ -3,6 +3,7 @@ import { Pressable, SafeAreaView, Text, View } from "react-native";
 import { SplashScreen, Stack, useRouter, useSearchParams } from "expo-router";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 
+import { api } from "~/utils/api";
 import { ProductImage } from "~/components";
 import { useCartManager } from "~/hooks/useCartManager";
 import { useMenu } from "~/hooks/useMenu";
@@ -12,8 +13,14 @@ const Product: React.FC = () => {
   const { id } = useSearchParams();
   const [count, setCount] = useState(0);
   const { addToCart } = useCartManager();
+  const { productDetails, isProductLiked } = useMenu({ productId: Number(id) });
 
-  const { productDetails } = useMenu({ productId: Number(id) });
+  const { like } = api.useContext();
+  const { mutate } = api.like.toggleLike.useMutation({
+    onSuccess: async () => {
+      await like.findLike.invalidate();
+    },
+  });
 
   if (!productDetails) return <SplashScreen />;
 
@@ -47,7 +54,15 @@ const Product: React.FC = () => {
             );
           },
           headerRight() {
-            return <AntDesign name="hearto" size={24} color="#7f4f24" />;
+            return (
+              <Pressable onPress={() => mutate({ id: productDetails.id })}>
+                <AntDesign
+                  name={isProductLiked() ? "heart" : "hearto"}
+                  size={24}
+                  color="#7F4F24"
+                />
+              </Pressable>
+            );
           },
         }}
       />
