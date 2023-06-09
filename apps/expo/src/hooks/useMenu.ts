@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
+import { api } from "~/utils/api";
 import { type MenuItemType, type ProductType } from "../../../types";
 
 function getMenu() {
@@ -20,6 +21,7 @@ export const useMenu = ({
   status: "error" | "success" | "loading";
   error: unknown;
   productDetails: ProductType | null;
+  isProductLiked: (productId: number) => boolean;
 } => {
   const {
     data: menuItems,
@@ -69,5 +71,29 @@ export const useMenu = ({
     }
   }, [productId]);
 
-  return { menuItems: filteredMenuItems, status, error, productDetails };
+  function isProductLiked(productId: number): boolean {
+    if (menuItems) {
+      for (const category of menuItems) {
+        for (const product of category.products) {
+          if (product.id === productId) {
+            const { data } = api.like.findLike.useQuery({ id: productId });
+
+            if (data) {
+              return data.liked;
+            }
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  return {
+    menuItems: filteredMenuItems,
+    status,
+    error,
+    productDetails,
+    isProductLiked,
+  };
 };
