@@ -37,7 +37,7 @@ export default function MenuItem({
 
   return (
     <>
-      <a className="flex flex-row items-center justify-between p-2.5 text-xl">
+      <div className="flex flex-row items-center justify-between p-2.5 text-xl">
         <Link href={url} passHref>
           <div className="flex flex-row items-center">
             <Icon />
@@ -47,7 +47,7 @@ export default function MenuItem({
         {isNested ? (
           <ExpandIcon isExpanded={isExpanded} handleClick={onClick} />
         ) : null}
-      </a>
+      </div>
       {isExpanded && isNested ? <MenuItemsList options={subItems} /> : null}
     </>
   );

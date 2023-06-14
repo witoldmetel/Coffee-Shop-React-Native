@@ -8,7 +8,7 @@ type SidebarProps = {
 export default function Sidebar({ isOpened }: SidebarProps) {
   return (
     <aside
-      className="flex flex-col overflow-hidden bg-[#ddb892]"
+      className="flex flex-col overflow-hidden border-r-2 border-[#43281c] bg-[#ddb892]"
       style={{
         width: isOpened ? "15vw" : "0vw",
         transition: "width 0.5s",

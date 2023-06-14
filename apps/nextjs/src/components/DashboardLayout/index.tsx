@@ -18,7 +18,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       <Header isOpened={isOpened} toggleDrawer={toggleDrawer} />
       <div className="flex flex-1 bg-gradient-to-b from-[#ddb892] to-[#fff]">
         <Sidebar isOpened={isOpened} />
-        <div className="w-5/6 p-5">{children}</div>
+        <div className="w-full p-5">{children}</div>
       </div>
       <Footer />
     </div>
