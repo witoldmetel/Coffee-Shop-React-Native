@@ -6,6 +6,7 @@ import { SessionProvider } from "next-auth/react";
 
 import { api } from "~/utils/api";
 import { DashboardLayout } from "~/components";
+import { CartManagerProvider } from "~/contexts/CartManagerContext";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -13,9 +14,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <DashboardLayout>
-        <Component {...pageProps} />
-      </DashboardLayout>
+      <CartManagerProvider>
+        <DashboardLayout>
+          <Component {...pageProps} />
+        </DashboardLayout>
+      </CartManagerProvider>
     </SessionProvider>
   );
 };
