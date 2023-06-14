@@ -10,7 +10,7 @@ export default function Sidebar({ isOpened }: SidebarProps) {
     <aside
       className="flex flex-col overflow-hidden bg-[#ddb892]"
       style={{
-        width: isOpened ? "20vw" : "0vw",
+        width: isOpened ? "15vw" : "0vw",
         transition: "width 0.5s",
       }}
     >

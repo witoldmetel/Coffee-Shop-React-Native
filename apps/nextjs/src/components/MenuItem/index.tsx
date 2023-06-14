@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { TbChristmasTree } from "react-icons/tb";
+import { MdExpandLess, MdExpandMore } from "react-icons/md";
 
 import { type MenuItemType } from "~/types";
 import MenuItemsList from "../MenuItemsList";
@@ -13,9 +12,9 @@ type ExpandIconPros = {
 
 function ExpandIcon({ isExpanded, handleClick }: ExpandIconPros) {
   return isExpanded ? (
-    <TbChristmasTree onClick={handleClick} />
+    <MdExpandLess onClick={handleClick} />
   ) : (
-    <TbChristmasTree onClick={handleClick} />
+    <MdExpandMore onClick={handleClick} />
   );
 }
 
@@ -24,12 +23,12 @@ type MenuItemProps = {
 };
 
 export default function MenuItem({
-  menuItem: { name, icon: Icon, url, depth, subItems },
+  menuItem: { name, icon: Icon, url, subItems },
 }: MenuItemProps) {
   const [isExpanded, toggleExpanded] = useState(false);
 
-  const router = useRouter();
-  const selected = router.asPath === url;
+  // const router = useRouter();
+  // const selected = router.asPath === url;
   const isNested = subItems && subItems?.length > 0;
 
   const onClick = () => {
@@ -38,52 +37,18 @@ export default function MenuItem({
 
   return (
     <>
-      {/* <a className={selected ? "selected" : ""} depth={depth}> */}
-      <div className={selected ? "selected" : ""}>
+      <a className="flex flex-row items-center justify-between p-2.5 text-xl">
         <Link href={url} passHref>
-          <div className="menu-item">
+          <div className="flex flex-row items-center">
             <Icon />
-            <span>{name}</span>
+            <span className="ml-3">{name}</span>
           </div>
         </Link>
         {isNested ? (
           <ExpandIcon isExpanded={isExpanded} handleClick={onClick} />
         ) : null}
-      </div>
+      </a>
       {isExpanded && isNested ? <MenuItemsList options={subItems} /> : null}
     </>
   );
 }
-
-// export const MenuItemContainer = styled.a<{ depth: number }>`
-//   display: flex;
-//   flex-direction: row;
-//   font-size: 20px;
-//   padding: 10px 0px 10px 10px;
-//   align-items: center;
-//   justify-content: space-between;
-
-//   & svg {
-//     height: 30px;
-//     margin-right: 10px;
-//   }
-
-//   &:hover {
-//     background-color: ${(props) => props.theme.colors.main};
-//     color: ${(props) => props.theme.colors.secondary};
-//     opacity: 0.5;
-//     cursor: pointer;
-//   }
-
-//   .menu-item {
-//     display: flex;
-//     flex-direction: row;
-//     align-items: center;
-//     margin-left: ${({ depth }) => `${depth}rem`};
-//   }
-
-//   &.selected {
-//     background-color: ${(props) => props.theme.colors.main};
-//     color: ${(props) => props.theme.colors.textLight};
-//   }
-// `;

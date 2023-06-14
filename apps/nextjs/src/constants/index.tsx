@@ -1,58 +1,22 @@
-import { TbChristmasTree } from "react-icons/tb";
+import { FaCoffee, FaShoppingCart, FaTag } from "react-icons/fa";
 
 import { type MenuItemType, type MenuOptionType } from "~/types";
 
 const MENU_OPTIONS: MenuOptionType[] = [
   {
-    name: "Dashboard",
-    icon: TbChristmasTree,
+    name: "Menu",
+    icon: FaCoffee,
     url: "/",
   },
   {
-    name: "Orders",
-    icon: TbChristmasTree,
-    url: "/orders",
-    subItems: [
-      {
-        name: "New",
-        icon: TbChristmasTree,
-        url: "/new-orders",
-      },
-      {
-        name: "Completed",
-        icon: TbChristmasTree,
-        url: "/completed-orders",
-      },
-    ],
+    name: "Offers",
+    icon: FaTag,
+    url: "/offers",
   },
   {
-    name: "Customers",
-    icon: TbChristmasTree,
-    url: "/customers",
-    subItems: [
-      {
-        name: "Corporate",
-        icon: TbChristmasTree,
-        url: "/corporate",
-      },
-      {
-        name: "SMB",
-        icon: TbChristmasTree,
-        url: "/smb",
-        subItems: [
-          {
-            name: "Retail",
-            icon: TbChristmasTree,
-            url: "/retail",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    name: "Inventory",
-    icon: TbChristmasTree,
-    url: "/inventory",
+    name: "My Order",
+    icon: FaShoppingCart,
+    url: "/order",
   },
 ];
 
