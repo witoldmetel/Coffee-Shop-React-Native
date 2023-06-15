@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { NextPage } from "next";
+import { FaTrashAlt } from "react-icons/fa";
 
 import { Container } from "~/components";
 import { useCartManager } from "~/hooks/useCartManager";
@@ -11,7 +12,7 @@ const Order: NextPage = () => {
 
   if (!orders || orders.length === 0) {
     return (
-      <div className="my-4 flex-1 items-center justify-center ">
+      <div className="my-4 flex flex-1 items-center justify-center">
         <p className="my-4 text-lg font-semibold text-black">
           You don&apos;t have any orders
         </p>
@@ -21,27 +22,17 @@ const Order: NextPage = () => {
 
   return (
     <Container>
-      <div className="flex-1 p-8">
+      <div className="flex flex-1 flex-col p-8">
         <p className="my-4 ml-4 font-semibold text-gray-400">ITEMS</p>
         <div className="rounded-lg bg-[#ede0d4] p-4">
           {orders.map((item, index) => (
             <div key={item.productId}>
-              <div className="flex-row items-center justify-between bg-[#ede0d4] py-4">
+              <div className="flex flex-row items-center justify-between bg-[#ede0d4] py-4">
                 <p className="font-semibold">{`${item.quantity}x ${item.productName}`}</p>
-                <div className="flex-row items-center">
+                <div className="flex flex-row items-center">
                   <p className="mr-2">$ {item.totalPrice.toFixed(2)}</p>
                   <button onClick={() => removeFromCart(item.productId)}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="#dd3a0a"
-                      className="h-6 w-6"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M9 2a1 1 0 0 0-1 1v11a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1zm3 0a1 1 0 0 0-1 1v11a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1zM5 4a1 1 0 0 0-1 1v9a1 1 0 1 0 2 0V5a1 1 0 0 0-1-1zm6-2a1 1 0 0 0-1 1v9a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1z"
-                      />
-                    </svg>
+                    <FaTrashAlt size={16} color="#dd3a0a" />
                   </button>
                 </div>
               </div>
@@ -53,7 +44,7 @@ const Order: NextPage = () => {
         </div>
         <p className="my-4 ml-4 font-semibold text-gray-400">YOUR DETAILS</p>
         {/* @todo: Add missing validation */}
-        <div className="rounded-lg bg-[#ede0d4] px-4">
+        <div className="flex flex-col items-center justify-center rounded-lg bg-[#ede0d4] px-4">
           <input
             type="text"
             value={userName}
@@ -69,7 +60,7 @@ const Order: NextPage = () => {
             className="mb-4 bg-white p-2"
           />
         </div>
-        <div className="flex-row items-center justify-center py-8">
+        <div className="flex flex-row items-center justify-center py-8">
           <p className="mr-8">Total</p>
           <p className="font-semibold">$ {getTotalPrice()}</p>
         </div>

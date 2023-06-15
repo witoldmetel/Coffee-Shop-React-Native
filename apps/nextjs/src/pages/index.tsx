@@ -1,12 +1,14 @@
 import { useState } from "react";
 import type { NextPage } from "next";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 import { getImage } from "~/utils/image";
 import { Container } from "~/components";
 import { useMenu } from "~/hooks/useMenu";
 
 const Home: NextPage = () => {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const { menuItems, status, error } = useMenu({ searchQuery });
 
@@ -49,7 +51,11 @@ const Home: NextPage = () => {
             </div>
             <div className="grid grid-flow-row-dense auto-rows-max grid-cols-4 gap-4 bg-white p-4">
               {category.products.map((product) => (
-                <div key={product.id} className="rounded bg-[#ede0d4]">
+                <div
+                  key={product.id}
+                  className="cursor-pointer rounded bg-[#ede0d4]"
+                  onClick={() => router.push(`/product/${product.id}`)}
+                >
                   <div className="flex flex-col items-center">
                     <div className="w-full">
                       <Image

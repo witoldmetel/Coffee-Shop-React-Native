@@ -43,57 +43,37 @@ const Product = () => {
   const getTotalPrice = (price: number): number => count * price;
 
   return (
-    <div className="flex-1 bg-[#F2F2F7]">
-      <div>
-        <div className="flex-row items-center justify-between">
-          <button
-            className="flex-row items-center"
-            onClick={() => router.back()}
-          >
-            <AiOutlineArrowLeft size={24} color="#7f4f24" />
-            <span className="color-[#7f4f24] ml-2">Products</span>
-          </button>
-          <button onClick={() => mutate({ id: productDetails.id })}>
-            {isProductLiked() ? (
-              <AiFillHeart size={24} color="#7F4F24" />
-            ) : (
-              <AiOutlineHeart size={24} color="#7F4F24" />
-            )}
-          </button>
-        </div>
+    <div className="flex-1 rounded-xl bg-[#F2F2F7] p-2">
+      <div className="flex w-full flex-row items-center justify-between p-4">
+        <button onClick={() => router.back()}>
+          <AiOutlineArrowLeft size={24} color="#7f4f24" />
+        </button>
+        <span className="color-[#7f4f24] ml-2">Products</span>
+        <div />
       </div>
 
-      <div className="m-4 flex-1 items-center rounded-lg bg-[#fff] p-4">
-        {/* <ProductImage
-          name={productDetails.name}
-          url={productDetails.image}
-          contentFit="contain"
-          contentPosition="top"
-          style={{ width: "100%", height: 180 }}
-        /> */}
+      <div className="m-4 flex flex-1 flex-col items-center rounded-lg bg-[#fff] p-4">
         <Image
           src={getImage(productDetails.image)}
           alt={productDetails.name}
-          width={0}
-          height={0}
-          sizes="100vw"
-          style={{ width: "100%", height: "auto" }}
+          width={510}
+          height={180}
         />
         <h1 className="py-2 text-3xl">{productDetails.name}</h1>
         <p className="text-1xl py-2 text-center">
           {productDetails.description}
         </p>
-        <div className="w-full flex-row items-center justify-between">
+        <div className="flex w-full flex-row items-center justify-center">
           <p className="text-1xl py-2">{`$ ${productDetails.price.toFixed(
             2,
           )} ea`}</p>
-          <div className="my-8 flex-row rounded-lg bg-[#f2f2f7]">
+          <div className="my-8 ml-4 flex flex-row rounded-lg bg-[#f2f2f7]">
             <button className="p-2" onClick={decrease}>
-              <AiOutlineMinusCircle size={24} color="black" />
+              <AiOutlineMinusCircle size={35} color="black" />
             </button>
             <div className="my-2 h-auto w-px bg-[#929299]" />
             <button className="p-2" onClick={increase}>
-              <AiOutlinePlusCircle size={24} color="black" />
+              <AiOutlinePlusCircle size={35} color="black" />
             </button>
           </div>
         </div>
@@ -103,14 +83,15 @@ const Product = () => {
         <button
           className="my-8 w-full rounded-3xl bg-[#ebd7b3] p-4"
           disabled={count === 0}
-          onClick={() =>
+          onClick={() => {
             addToCart(
               productDetails.id,
               productDetails.name,
               count,
               getTotalPrice(productDetails.price),
-            )
-          }
+            );
+            router.back();
+          }}
         >
           <span className="text-1xl text-center">Add {count} to cart</span>
         </button>
