@@ -24,11 +24,22 @@ const Home: NextPage = () => {
       </p>
     );
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
   return (
     <Container>
+      <input
+        type="text"
+        value={searchQuery}
+        onChange={handleInputChange}
+        placeholder="Search..."
+        className="mb-4 rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
       {menuItems?.map((category) => (
-        <>
-          <div key={category.name} className="rounded-lg bg-[#ede0d4] p-4">
+        <div key={category.name}>
+          <div className="bg-[#ede0d4] p-4">
             <p className="text-base font-bold text-[#410413]">
               {category.name}
             </p>
@@ -40,7 +51,7 @@ const Home: NextPage = () => {
               </div>
             ))}
           </div>
-        </>
+        </div>
       ))}
     </Container>
   );
