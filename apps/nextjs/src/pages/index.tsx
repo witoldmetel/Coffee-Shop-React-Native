@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { NextPage } from "next";
 import Image from "next/image";
 
+import { getImage } from "~/utils/image";
 import { Container } from "~/components";
 import { useMenu } from "~/hooks/useMenu";
 
@@ -29,9 +30,6 @@ const Home: NextPage = () => {
     setSearchQuery(event.target.value);
   };
 
-  const getImage = (url: string) =>
-    `https://firtman.github.io/coffeemasters/api/images/${url}`;
-
   return (
     <Container>
       <input
@@ -44,12 +42,12 @@ const Home: NextPage = () => {
       {menuItems && menuItems.length ? (
         menuItems.map((category) => (
           <div key={category.name}>
-            <div className="bg-[#ede0d4] p-4">
+            <div className="bg-transparent p-4">
               <p className="text-base font-bold text-[#410413]">
                 {category.name}
               </p>
             </div>
-            <div className="grid grid-flow-row-dense auto-rows-max grid-cols-3 gap-4 bg-white p-4">
+            <div className="grid grid-flow-row-dense auto-rows-max grid-cols-4 gap-4 bg-white p-4">
               {category.products.map((product) => (
                 <div key={product.id} className="rounded bg-[#ede0d4]">
                   <div className="flex flex-col items-center">
